@@ -14,6 +14,7 @@ export const config = {
     ...(process.env.CLIENT_ORIGINS ?? '').split(',').map(origin => origin.trim()).filter(Boolean),
     'http://localhost:3000',
     'http://localhost:3001',
+    'https://book-nook-client.vercel.app',
   ].filter((origin): origin is string => Boolean(origin)))),
   authIssuer: required('BETTER_AUTH_ISSUER'),
   authAudience: required('BETTER_AUTH_AUDIENCE'),
