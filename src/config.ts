@@ -11,8 +11,7 @@ export const config = {
   mongoUri: required('MONGODB_URI'),
   mongoDb: process.env.MONGODB_DB ?? 'booknook',
   clientOrigins: Array.from(new Set([
-    ...(process.env.CLIENT_ORIGIN ?? 'http://localhost:3000').split(',').map(origin => origin.trim()).filter(Boolean),
-    process.env.CLIENT_URL,
+    ...(process.env.CLIENT_ORIGINS ?? '').split(',').map(origin => origin.trim()).filter(Boolean),
     'http://localhost:3000',
     'http://localhost:3001',
   ].filter((origin): origin is string => Boolean(origin)))),
