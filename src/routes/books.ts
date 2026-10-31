@@ -7,7 +7,7 @@ export function bookRoutes(database: Database) {
   const router = Router();
   const auth = authMiddleware(database.users);
   router.get('/', async (req, res, next) => { try { const limit = Number(req.query.limit); const cursor = database.books.find().sort({ addedAt: -1 }); res.json(await (Number.isInteger(limit) && limit > 0 ? cursor.limit(Math.min(limit, 100)) : cursor).toArray()); } catch (error) { next(error); } });
-  router.get('/:id', async (req, res, next) => { try { const id = objectId(req.params.id); if (!id) return fail(res, 'Invalid book id.'); const book = await database.books.findOne({ _id: id }); return book ? res.json(book) : fail(res, 'Book not found.', 404); } catch (error) { next(error); } });
+  router.get('/:id', auth, async (req, res, next) => { try { const id = objectId(req.params.id); if (!id) return fail(res, 'Invalid book id.'); const book = await database.books.findOne({ _id: id }); return book ? res.json(book) : fail(res, 'Book not found.', 404); } catch (error) { next(error); } });
   router.post('/', auth, async (req: AuthRequest, res, next) => {
     try {
       const { title, author, category, image, description, totalCopies } = req.body;
