@@ -14,7 +14,7 @@ try {
   await client.connect();
   const database = client.db(process.env.MONGODB_DB || 'booknook');
   const result = await database.collection('books').updateOne({ title }, { $set: { image } });
-  console.log(`Matched ${result.matchedCount} document(s).`);
+  console.log(`Matched ${result.matchedCount} document(s); modified ${result.modifiedCount} document(s).`);
 } finally {
   await client.close();
 }
